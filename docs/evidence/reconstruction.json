@@ -1,0 +1,23 @@
+[
+  {
+    "sample": "Snow_Night_Visitor.pdf",
+    "structure": "pass",
+    "all_image_pixels_preserved": true,
+    "screen_render_matches": true
+  },
+  {
+    "sample": "ningyo_halloween_pumpkin.pdf",
+    "structure": "pass",
+    "all_image_pixels_preserved": true,
+    "screen_render_matches": true
+  },
+  {
+    "sample": "Ningyo_Halloween_Poster.pdf",
+    "structure": "pass",
+    "all_image_pixels_preserved": true,
+    "screen_render_matches": true,
+    "print_render_matches": true,
+    "screen_differs_from_print": true,
+    "omitting_annotations_returns_screen_image": true
+  }
+]
