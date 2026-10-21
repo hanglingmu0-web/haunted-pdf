@@ -63,3 +63,9 @@ Static inspection of the supplied scripts found no external data submission, URL
 ## Publication and usage terms
 
 Published on October 21, 2026. No license has been specified for the PDFs, images, or code. The fictional movie poster is not an official production or announcement.
+
+These demonstrations use existing PDF features; the project does not claim to have invented AcroForm animation or print-only annotations. Licensing the concrete implementation is a separate question from the originality of the technique.
+
+The creator describes the movie poster as AI-generated artwork paying homage to *Home Alone* and *Child's Play* (Chucky). This description is not evidence of authorization from those works' rightsholders. AI generation and homage do not by themselves establish public-domain status or clear third-party rights. No individual rights-clearance assessment has been completed. See Japan's Agency for Cultural Affairs guidance on [AI and copyright](https://www.bunka.go.jp/seisaku/chosakuken/aiandcopyright.html).
+
+No repository-wide MIT, Creative Commons, or CC0 grant is made. If a reuse license is adopted later, the recommended approach is to license eligible implementation code separately from the sample PDFs and artwork, with explicit file scope; MIT is a candidate for that code, not an adopted license. Public availability alone is not a general reuse permission for copyrightable material. GitHub's platform permissions and applicable legal exceptions remain unaffected. See [GitHub's licensing guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
