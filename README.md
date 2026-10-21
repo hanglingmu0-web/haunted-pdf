@@ -29,7 +29,7 @@
 - `src/original/`：各PDFの有効なJavaScriptを抽出した読み物用ソース。
 - `tests/timer.test.cjs`：Acrobat APIを模擬したフレーム順序・タイマー検証。
 - [技術解説](docs/TECHNICAL.md)、[検証結果](docs/VALIDATION.md)、[個人情報検査](docs/PRIVACY.md)。
-- [note記事の修正案](docs/NOTE_REVIEW.md)、[公開作業の手順](docs/PUBLICATION.md)。
+- [note記事の修正案](docs/NOTE_REVIEW.md)、[公開情報・記事用リンク](docs/PUBLICATION.md)。
 
 元の画像制作プロジェクトや元の制作コードは提供されていません。本リポジトリのPythonコードは、提供PDFから画像を抽出して仕組みを再構築したものです。画像そのものをAIで一から生成し直すコードではありません。
 

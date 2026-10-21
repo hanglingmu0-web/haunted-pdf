@@ -4,6 +4,8 @@
 
 使用環境：pypdf 6.10.0、Pillow 12.3.0、pypdfium2 5.14.0、PDFium 156.0.8076.0。初期の目視確認ではPoppler 26.07.0も使用しました。
 
+公開後の追加確認：2026年10月21日に[GitHub Actionsの検証](https://github.com/hanglingmu0-web/haunted-pdf/actions/runs/39586157385)が成功しました（対象コミット`4ba30eb56a9e544bfbab33b24d18a547f023db47`）。Ubuntu環境で原本ハッシュ確認・抽出・再構築・画像比較・模擬タイマー検証を実行しました。さらに、ログインなしで公開PDF3点をダウンロードし、すべて原本とSHA-256が一致しました。
+
 ## 完了した検証
 
 | 検証 | 結果 |
@@ -33,7 +35,6 @@ PDFiumでは`draw_annots=True`と`optimize_mode='print'`により印刷用フラ
 - 実プリンター、プリンタードライバー、Acrobatの印刷ダイアログ。
 - 各アニメーションの再生中に印刷したときの結果。
 - C2PAの署名信頼性・有効性・元データとの結び付き。
-- 同梱のGitHub Actions設定のGitHub上での実行（ローカルのコマンドは実行済み）。
 
 ## 公開前の手動確認方法
 
