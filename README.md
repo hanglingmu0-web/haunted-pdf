@@ -1,45 +1,47 @@
-# 動くPDFで作る呪いの絵
+# Haunted PDF: Animated Pictures and Print-Time Surprises
 
-1ページのPDFで動くホラーポスターと、画面と印刷で姿が変わる日本人形。動画・GIFの埋め込みやページ送りは使いません。
+English | [日本語](README.ja.md)
 
-公開先：[hanglingmu0-web/haunted-pdf](https://github.com/hanglingmu0-web/haunted-pdf)
+Three single-page PDF demonstrations: a horror poster with an opening door, a Japanese doll whose hair grows, and a doll that looks different when printed. They use PDF forms, JavaScript, and annotations, without embedded videos, GIFs, or page-turn animation.
 
-| 作品 | PDF | 仕掛け |
+Repository: [hanglingmu0-web/haunted-pdf](https://github.com/hanglingmu0-web/haunted-pdf)
+
+| Demo | PDF | How it works |
 | --- | --- | --- |
-| 雪の夜の留守番 | [ダウンロード](samples/Snow_Night_Visitor.pdf) | 扉が開く。41個の画像付きボタンをJavaScriptで切り替え |
-| 髪が伸びる日本人形 | [ダウンロード](samples/ningyo_halloween_pumpkin.pdf) | 髪が伸びる。同じ構造でゆっくり再生 |
-| 印刷すると変わる日本人形 | [ダウンロード](samples/Ningyo_Halloween_Poster.pdf) | ページ本体＋印刷専用Stamp注釈。JavaScriptなし |
+| Snow Night Visitor | [Download](samples/Snow_Night_Visitor.pdf) | JavaScript switches between 41 image-backed buttons as the door opens |
+| Growing-hair doll | [Download](samples/ningyo_halloween_pumpkin.pdf) | The same structure, with a slower animation |
+| Print-time doll transformation | [Download](samples/Ningyo_Halloween_Poster.pdf) | Page content plus a print-only Stamp annotation; no JavaScript |
 
-![雪の夜の留守番の初期画像](previews/snow-start.jpg)
+![Initial frame of Snow Night Visitor](previews/snow-start.jpg)
 
-上の画像は静止画です。仕掛けを体験するにはPDFをダウンロードしてください。GitHubのプレビューは動作確認の代わりにはなりません。
+The preview above is a still image. Download the PDF to experience the effect. GitHub's preview is not a playback test. The supplied artwork retains its original Japanese text.
 
-## 開き方
+## Viewing the demos
 
-アニメーションはデスクトップ版Adobe Acrobat ReaderのJavaScript環境を想定しています。ただし、このリポジトリの検証ではAcrobat ReaderおよびChromeでの実再生を確認していません。ビューアーと設定によって動かない場合があります。JavaScriptが実行されなくても、ページ本体の静止画像を表示する構造です。
+The animations target the JavaScript environment in desktop Adobe Acrobat Reader. **Playback in Acrobat Reader and Chrome has not been tested for this repository.** Support and settings vary between viewers. When JavaScript does not run, the initial image remains available as ordinary page content.
 
-日本人形はゆっくり変化します。コード上は14秒後に最初のボタン画像へ切り替わりますが、この画像は初期画像と同じです。初期画像と画素が異なる画像へ進むのは16秒後です。映画ポスターは4.2秒後に最初のボタン画像へ切り替わり、初期画像と画素が異なる画像へ進むのは9秒後です。タイマーの実行間隔はビューアーの状態に左右されます。
+The doll changes slowly. Its first button image appears after 14 seconds in the script's schedule, but that image duplicates the initial image. The first image with different pixels appears after 16 seconds. For the movie poster, these times are 4.2 seconds and 9 seconds, respectively. Actual timing depends on the viewer.
 
-印刷版では、スタンプを含める印刷設定が必要です。Adobeの説明する「Document and Stamps」または「Document and Markups」に相当する設定を確認してください。画面用と印刷用の結果は[プレビュー比較](docs/TECHNICAL.md#印刷版)で確認できます。[Adobeの印刷設定解説](https://helpx.adobe.com/acrobat/desktop/print-documents/use-secure-and-special-print-mode/print-comments.html)
+For the print-time demo, choose a print setting that includes stamps, such as **Document and Stamps** or **Document and Markups** in Acrobat. See the [screen/print comparison](docs/TECHNICAL.md#print-time-demo) and [Adobe's printing guidance](https://helpx.adobe.com/acrobat/desktop/print-documents/use-secure-and-special-print-mode/print-comments.html).
 
-## 収録内容
+## Repository contents
 
-- `samples/`：作者提供の3点。バイト列を変更せず収録。
-- `src/pdf_tools.py`：構造調査、画像抽出、PDF再構築、比較検証。
-- `src/original/`：各PDFの有効なJavaScriptを抽出した読み物用ソース。
-- `tests/timer.test.cjs`：Acrobat APIを模擬したフレーム順序・タイマー検証。
-- [技術解説](docs/TECHNICAL.md)、[検証結果](docs/VALIDATION.md)、[個人情報検査](docs/PRIVACY.md)。
-- [note記事の修正案](docs/NOTE_REVIEW.md)、[公開情報・記事用リンク](docs/PUBLICATION.md)。
+- `samples/`: the three supplied PDFs, preserved byte for byte.
+- `src/pdf_tools.py`: structure inspection, image extraction, PDF reconstruction, and comparison checks.
+- `src/original/`: the active JavaScript extracted from each animation, for reference.
+- `tests/timer.test.cjs`: frame order and timer checks using mocked Acrobat APIs.
+- [Technical explanation](docs/TECHNICAL.md), [validation results](docs/VALIDATION.md), and [privacy inspection](docs/PRIVACY.md).
+- [Review of the accompanying note article](docs/NOTE_REVIEW.md) and [publication information](docs/PUBLICATION.md).
 
-元の画像制作プロジェクトや元の制作コードは提供されていません。本リポジトリのPythonコードは、提供PDFから画像を抽出して仕組みを再構築したものです。画像そのものをAIで一から生成し直すコードではありません。
+The original artwork project and original production code were not supplied. The Python code in this repository reconstructs the PDF mechanisms using images extracted from the supplied PDFs. It does not regenerate the artwork from AI prompts.
 
-## 再構築と検証
+## Reconstruct and validate
 
-Python 3.10以降とNode.jsが必要です。リポジトリ直下で次を実行します。
+Requires Python 3.10 or later and Node.js. Run these commands from the repository root:
 
 ```sh
 python -m venv .venv
-# 仮想環境を有効化してから実行
+# Activate the virtual environment before continuing.
 python -m pip install -r requirements.txt
 python src/pdf_tools.py inspect
 python src/pdf_tools.py extract
@@ -48,16 +50,16 @@ python src/pdf_tools.py validate
 node tests/timer.test.cjs
 ```
 
-抽出物は`work/assets/`、再構築PDFは`work/rebuilt/`、検証結果は`work/validation/`に保存されます。`work/`はGit管理対象外です。
+Extracted assets go to `work/assets/`, reconstructed PDFs to `work/rebuilt/`, and validation outputs to `work/validation/`. The `work/` directory is excluded from Git.
 
-再構築版は元PDFと画像・仕掛けを比較するための別ファイルです。オブジェクト番号、圧縮、メタデータは一致せず、元のContent Credentialsも移植しません。来歴情報を含む原本は`samples/`に保持しています。
+Reconstructed PDFs are separate derivatives for comparing the images and mechanisms. Object numbers, compression, and metadata may differ. Original Content Credentials are not transplanted into these derivatives. The originals, including their provenance data, remain in `samples/`.
 
-## この仕組みで守れないもの
+## Security limitations
 
-印刷専用の表示は暗号化やアクセス制御ではありません。印刷を禁止することも、画像の抽出や画面の保存を防ぐこともできません。機密情報を隠して配布する手段としては扱わず、演出・印刷用注記・文書検査の教材として説明しています。
+Print-only content is neither encryption nor access control. It does not prevent printing, image extraction, or screenshots. These examples demonstrate visual effects, print-only notices, and document inspection; they are not a way to protect confidential data.
 
-収録PDFのスクリプトには、外部送信、URL起動、ローカルファイル取得、外部プログラム起動の処理を確認していません。これは今回の3点の静的検査結果であり、一般のPDFの安全性を保証するものではありません。
+Static inspection of the supplied scripts found no external data submission, URL launching, local file retrieval, or external program execution. This finding applies to these three files and is not a general guarantee about PDF safety.
 
-## 公開状況と利用条件
+## Publication and usage terms
 
-このリポジトリは2026年10月21日に公開しました。現時点でPDF・画像・コードのライセンスは指定していません。作品は架空の映画ポスターを含み、公式作品・公式告知ではありません。
+Published on October 21, 2026. No license has been specified for the PDFs, images, or code. The fictional movie poster is not an official production or announcement.

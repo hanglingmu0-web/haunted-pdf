@@ -1,48 +1,50 @@
-# 検証結果
+# Validation results
 
-2026年10月21日（日本時間）にWindows上で検証しました。
+English | [日本語](VALIDATION.ja.md)
 
-使用環境：pypdf 6.10.0、Pillow 12.3.0、pypdfium2 5.14.0、PDFium 156.0.8076.0。初期の目視確認ではPoppler 26.07.0も使用しました。
+Validated on Windows on October 21, 2026 (Japan Standard Time).
 
-公開後の追加確認：2026年10月21日に[GitHub Actionsの検証](https://github.com/hanglingmu0-web/haunted-pdf/actions/runs/39586157385)が成功しました（対象コミット`4ba30eb56a9e544bfbab33b24d18a547f023db47`）。Ubuntu環境で原本ハッシュ確認・抽出・再構築・画像比較・模擬タイマー検証を実行しました。さらに、ログインなしで公開PDF3点をダウンロードし、すべて原本とSHA-256が一致しました。
+Environment: pypdf 6.10.0, Pillow 12.3.0, pypdfium2 5.14.0, and PDFium 156.0.8076.0. Poppler 26.07.0 was also used for initial visual inspection.
 
-## 完了した検証
+After publication, [GitHub Actions passed](https://github.com/hanglingmu0-web/haunted-pdf/actions/runs/39586157385) on October 21, 2026 for commit `4ba30eb56a9e544bfbab33b24d18a547f023db47`. The Ubuntu runner checked original hashes, extraction, reconstruction, image comparisons, and mocked timers. All three published PDFs were also downloaded without authentication and matched the originals' SHA-256 hashes.
 
-| 検証 | 結果 |
+## Completed checks
+
+| Check | Result |
 | --- | --- |
-| 3点のページ数、画像数、注釈種類、OCGの不使用 | 合格 |
-| 2点の41フィールドとページの41 Widgetが同じオブジェクトを参照 | 合格 |
-| 名前、矩形、初期フラグ、正常Appearance、画像の順序 | 確認済み |
-| NamesとOpenActionの有効スクリプトの特定 | 完了 |
-| 再構築前後の86画像の復号後のRGB画素一致 | 合格 |
-| 再構築前後の初期画面レンダリングの完全一致 | 3点とも合格 |
-| 印刷版のStamp `/F 36`、AcroForm/JavaScriptなし | 合格 |
-| 印刷版の画面と印刷モードの画像が異なる | 合格 |
-| 印刷版の注釈を省略すると画面用画像になる | 合格 |
-| 印刷版の再構築前後の印刷モード画像一致 | 合格 |
-| 2点のJavaScriptを模擬Acrobat APIで各144tick（3周）実行 | 合格 |
-| 自動開始、タイマーの重複防止、フレーム順、初期表示への復帰 | 模擬環境で合格 |
-| 原本と公開用コピーのSHA-256一致 | 3点とも合格 |
+| Page counts, image counts, annotation types, and absence of OCGs | Passed for all three files |
+| The 41 fields and 41 page Widgets reference the same objects | Passed for both animations |
+| Names, rectangles, initial flags, nonempty normal appearances, and image order | Checked |
+| Identification of active scripts through Names and OpenAction | Completed |
+| Decoded RGB pixels of all 86 images preserved during reconstruction | Passed |
+| Original/reconstructed initial screen renders match exactly | Passed for all three files |
+| Print-time Stamp uses `/F 36`, with no AcroForm or JavaScript | Passed |
+| Print-time demo differs between screen and print modes | Passed |
+| Excluding annotations returns the screen image in print mode | Passed |
+| Original/reconstructed print-mode renders match | Passed |
+| Each animation's JavaScript executed for 144 ticks (three cycles) with mocked Acrobat APIs | Passed |
+| Automatic startup, prevention of duplicate timers, frame order, return to initial display | Passed in mock environment |
+| Supplied originals and published copies have identical SHA-256 hashes | Passed for all three files |
 
-`validate`はページ・画像・フィールド構造、全画像画素、PDFiumレンダリングを比較します。`timer.test.cjs`は抽出した有効スクリプトを実行して、毎tickで表示されるフィールドを確認します。これは新しい別実装だけを検証するものではありません。
+`validate` compares page/image/field structure, all image pixels, and PDFium renders. `timer.test.cjs` runs the extracted active scripts and checks which fields are visible on every tick, rather than only testing a separate new implementation.
 
-PDFiumでは`draw_annots=True`と`optimize_mode='print'`により印刷用フラグを使用しました。画像Bを手作業で貼り合わせた疑似印刷ではありません。ただし、紙に出力した試験ではありません。アニメーションの画面検証は初期の静止画を対象とし、フォームを動かす描画エンジンの試験ではありません。
+PDFium used `draw_annots=True` and `optimize_mode='print'` to enable its print rendering flag. The print result was not simulated by manually compositing image B. However, it was a rasterization test, not a physical print test. Screen comparisons for the animations cover the initial still image, not animated form rendering in a viewer.
 
-## 未検証
+## Not tested
 
-- Adobe Acrobat Readerの実再生、バージョン差、再描画の滑らかさ。
-- Chrome、Edge、Firefox、macOS Preview、モバイルの実再生・実印刷。
-- 実プリンター、プリンタードライバー、Acrobatの印刷ダイアログ。
-- 各アニメーションの再生中に印刷したときの結果。
-- C2PAの署名信頼性・有効性・元データとの結び付き。
+- Actual Adobe Acrobat Reader playback, version differences, and redraw smoothness.
+- Actual playback or printing in Chrome, Edge, Firefox, macOS Preview, or mobile viewers.
+- Physical printers, printer drivers, and Acrobat's print dialog.
+- Printing either animation while it is playing.
+- C2PA signature trust, validity, and binding to the original data.
 
-## 公開前の手動確認方法
+## Manual viewer test procedure
 
-1. OSとビューアーのバージョンを記録する。
-2. 映画ポスターを開き、約9秒以降の変化と約28.8秒ごとのループを観察する。
-3. 動く人形を開き、約16秒以降の変化と約96秒ごとのループを観察する。ゆっくりなので2分以上観察する。
-4. 印刷版を開き、画面が短髪であることを確認する。
-5. スタンプを含める印刷設定で長髪、含めない設定で短髪になるか、印刷プレビューと出力で確認する。
-6. 実測結果をこの文書に追記する。確認できなかった環境は「未検証」のままにする。
+1. Record the operating system and viewer version.
+2. Open the movie poster and observe changes after approximately 9 seconds and a cycle of approximately 28.8 seconds.
+3. Open the animated doll and observe changes after approximately 16 seconds and a cycle of approximately 96 seconds. Watch for more than two minutes because the animation is slow.
+4. Open the print-time demo and confirm that it shows short hair on screen.
+5. Compare print preview and output with stamps included and excluded: expect long hair when included and short hair when excluded.
+6. Add measured results and the environment to this document. Keep untested environments explicitly marked as untested.
 
-ローカルでの構造検証だけを「Acrobat/Chrome動作確認済み」と表記しないでください。
+Structural checks alone must not be described as successful Acrobat or Chrome playback tests.

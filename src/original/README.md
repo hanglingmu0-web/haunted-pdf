@@ -1,7 +1,9 @@
-# 有効なJavaScriptの抽出
+# Extracted active JavaScript
 
-`snow.js`と`ningyo-animation.js`は、それぞれの原本PDFの`Names / JavaScript`から参照されるスクリプトを抽出したものです。OpenActionはいずれも`ningyoStart();`です。
+English | [日本語](README.ja.md)
 
-PDF内の値を保つため、映画ポスター側も元の`ningyo`という変数名・関数名をそのまま掲載しています。未使用の旧スクリプトは実行対象のソースに混ぜていません。
+`snow.js` and `ningyo-animation.js` contain the scripts referenced by `Names / JavaScript` in the respective original PDFs. Both OpenActions execute `ningyoStart();`.
 
-再構築時には`extract`が原本から`work/assets/`へ抽出し直したスクリプトを使います。このフォルダーは閲覧用です。
+The movie-poster script retains the original `ningyo` variable and function names to preserve the PDF's actual code. The unused older script is not mixed into these active-script references.
+
+During reconstruction, `extract` reads the scripts from the original PDFs again and places them in `work/assets/`. This directory is provided for reading and reference.

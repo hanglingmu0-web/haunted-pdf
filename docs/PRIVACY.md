@@ -1,57 +1,59 @@
-# 公開前の個人情報検査
+# Privacy inspection before publication
 
-検査日：2026年10月21日（日本時間）。対象は`samples/`の3点で、SHA-256は`SHA256SUMS.txt`に記録しています。
+English | [日本語](PRIVACY.ja.md)
 
-**検査した範囲では、利用者個人の氏名・メールアドレス・住所・電話番号・PCユーザー名・ローカル保存先パスは確認されませんでした。個人情報を除去するためのPDF変更は行っていません。**
+Inspected on October 21, 2026 (Japan Standard Time). The scope was the three files in `samples/`; their SHA-256 hashes are recorded in `SHA256SUMS.txt`.
 
-| ファイル | 個人情報の検出 | 残っている情報 |
+**Within the inspected scope, no personal name, email address, home address, phone number, computer username, or local storage path belonging to the user was identified. The PDFs were not modified to remove personal information.**
+
+| File | Personal information identified | Other retained information |
 | --- | --- | --- |
-| Snow_Night_Visitor.pdf | 確認されず | 作品名・制作方法を説明するTitle/Subject/Creator、JavaScript名ツリーのUUID |
-| ningyo_halloween_pumpkin.pdf | 確認されず | Producer、Content Credentials（24,296バイト）、未使用の旧JavaScript |
-| Ningyo_Halloween_Poster.pdf | 確認されず | 一般的な作品タイトル・Creator、Content Credentials（24,296バイト）、増分保存前の版 |
+| Snow_Night_Visitor.pdf | None identified | Title/Subject/Creator describing the work and production method; a UUID in the JavaScript name tree |
+| ningyo_halloween_pumpkin.pdf | None identified | Producer; Content Credentials (24,296 bytes); an unused older script |
+| Ningyo_Halloween_Poster.pdf | None identified | Generic artwork title and Creator; Content Credentials (24,296 bytes); a previous incremental-save revision |
 
-## 調べた範囲
+## Inspection scope
 
-- Info辞書、Catalog、XMPの有無、PDF内の文字列・名前ツリー。
-- 全ページのテキスト、全86個のImage XObject、JPEG/画像メタデータ、EXIF/GPSの有無。
-- 全42画像ずつのコンタクトシート、ポスターの初期・最終画像の拡大表示、人形の画面用・印刷用画像の目視。
-- AcroForm、全Widget/Stamp注釈、Action、現在参照されるJavaScriptと未使用の旧JavaScript。
-- `/AF`と`/EmbeddedFiles`に登録された添付ファイル。
-- Content CredentialsのJUMBF/CBORデータ、署名内のX.509証明書のsubject/issuer/extensions。
-- 印刷版の増分保存前の版。過去版のInfoとCatalogを読み、オブジェクト1〜9が現在も使われる構造であることを確認。
-- PDFの生バイト列と復号ストリーム中のメール・パス・URL・電話番号らしい文字列。機械抽出候補は文脈を確認。
+- Info dictionaries, Catalog entries, presence of XMP, PDF strings, and name trees.
+- Text from all pages, all 86 Image XObjects, image/JPEG metadata, and presence of EXIF/GPS data.
+- Contact sheets covering all 42 images in each animation, enlarged initial/final movie-poster images, and the doll's screen/print images.
+- AcroForm, every Widget/Stamp annotation, Actions, currently referenced JavaScript, and unused older JavaScript.
+- Embedded files registered under `/AF` and `/EmbeddedFiles`.
+- JUMBF/CBOR data in Content Credentials and the subject, issuer, and extensions of embedded X.509 certificates.
+- The print-time PDF's previous incremental-save revision: its Info and Catalog were read, and objects 1 through 9 were confirmed to remain in the current structure.
+- Email-, path-, URL-, and phone-like strings in raw PDF bytes and decoded streams, with contextual review of automated matches.
 
-ページテキストは3点とも空でしたが、画像内の文字を別に目視しました。EXIF/GPSは検出されず、JPEGの追加情報は一般的なJFIFの密度等でした。住所・連絡先と判断できる画像内文字も確認されませんでした。
+Extracted page text was empty in all three PDFs, so text within images was reviewed visually. No EXIF/GPS data was detected. Additional JPEG information consisted of ordinary JFIF fields such as density. No image text identified as an address or contact detail was found.
 
-バイナリ中にメールアドレス形式に偶然一致する短い文字列が2件ありましたが、画像圧縮データ内のランダムなバイト列で、PDFの文字列値・画像メタデータではありません。電話番号候補の多くはxref表の10桁オフセットでした。これらを連絡先の検出として数えていません。
+Two short email-like matches occurred within random compressed-image bytes, rather than PDF string values or image metadata. Many phone-like candidates were ten-digit offsets in xref tables. These were not counted as contact information.
 
-## Content Credentialsに含まれるもの
+## Content Credentials
 
-人形2点には、作成由来を記録するデータが付いています。解読した内容には次が含まれます。
+Both doll PDFs carry provenance records. Decoded data included:
 
-- 生成サービス名：ChatGPT。
-- softwareAgentに記録された名前・バージョン：`gpt-6-thinking`。
-- 生成記録の日時：動く人形は2026年10月16日09:59:24頃、印刷版は2026年10月20日09:37:14頃（日本時間換算）。
-- 作品ごとのmanifest ID、instance ID、ハッシュ、署名・時刻証明情報。
-- OpenAIおよびSSL Corporationの組織証明書、証明書照会先URL。
+- Generator name: ChatGPT.
+- Recorded `softwareAgent` name and version: `gpt-6-thinking`.
+- Recorded creation times: approximately October 16, 2026, 09:59:24 for the animation and October 20, 2026, 09:37:14 for the print-time demo, both converted to Japan Standard Time (UTC+09:00).
+- Per-work manifest and instance IDs, hashes, signatures, and timestamp information.
+- Organizational certificates for OpenAI and SSL Corporation, plus certificate lookup URLs.
 
-これは「記録されている値」の報告です。生成日時が最終PDFの完成日時を示すとは限りません。C2PA署名の有効性やPDFとの結び付きは今回検証していません。
+These are values found in the records. The creation times do not necessarily describe completion of the final PDFs. C2PA signature validity and binding to these PDFs were not verified.
 
-証明書には米国の組織名や所在地が含まれますが、利用者の自宅住所や氏名ではありません。証明書の用途に`emailProtection`という名称が出てきますが、それ自体はメールアドレスではありません。利用者のメールアドレス、プロンプト、会話本文、アカウント名は確認されませんでした。
+The certificates contain US organization names and locations, rather than the user's personal name or home address. The certificate usage label `emailProtection` is not itself an email address. No user email address, prompt, conversation text, or account name was identified.
 
-生成日時や作品IDは、他の同一作品・制作記録と照合する手掛かりになり得ます。「個人名がない」ことと「来歴情報が一切ない」ことは区別してください。今回は来歴を保持し、原本のContent Credentialsを削除していません。
+Creation times and artwork IDs may help correlate a file with another copy or production record. Absence of a personal name does not mean absence of provenance. The originals' Content Credentials were retained.
 
-## スクリプトと外部参照
+## Scripts and external references
 
-確認できたスクリプトはフレーム表示、タイマー制御、エラー表示を行います。データ送信、外部URL起動、ファイル取得、外部プログラム起動のコードは確認されませんでした。証明書内のURLは証明書・失効情報の参照先で、アニメーションJavaScriptの送信先ではありません。ビューアー自身が証明書検証等の通信を行うかは、この静的検査とは別の問題です。
+The inspected scripts control frame visibility, timers, and error messages. No data submission, external URL launching, file retrieval, or external program execution code was identified. URLs within certificates refer to certificate or revocation information; they are not submission destinations in the animation scripts. Any network activity performed by a viewer itself, such as certificate verification, is outside this static inspection.
 
-## 限界
+## Limitations
 
-本検査は、一般的な公開前確認です。全画像へのOCR、ステガノグラフィ解析、暗号学的な証明書検証、顔からの人物特定、外部データとの照合は実施していません。PDFに見つからない個人情報が存在しないことを数学的に保証するものではありません。画像の人物が誰か、制作素材の権利関係がどうかは、この検査から判断していません。
+This was a routine pre-publication inspection. It did not include OCR of every image, steganalysis, cryptographic certificate validation, identification of people from faces, or correlation with external datasets. It does not mathematically guarantee the absence of undiscovered personal information. The identity of people depicted and rights to source artwork were not determined by this inspection.
 
-公開用コピーは原本とSHA-256が一致します。検査時のローカル絶対パス、PCユーザー名、詳細な作業ログは公開一式に収録していません。
+Published copies have the same SHA-256 hashes as the originals. Inspection workstation paths, computer usernames, and detailed working logs are not included in the publication package.
 
-## 検査の再実行
+## Repeat the inspection
 
 ```sh
 python -m pip install -r requirements-audit.txt
@@ -59,4 +61,4 @@ python src/audit_privacy.py
 python src/inspect_credentials.py
 ```
 
-結果は`work/audit/`に保存されます。出力される正規表現の候補は検出確定ではなく、目視と文脈確認が必要です。添付データや画像が出力されるので、別のPDFへ応用する場合も作業ログをそのまま公開しないでください。資格情報のパーサーはこの2点に現れるCBOR形式向けで、汎用のC2PA検証器ではありません。未知の形式に失敗した場合は「情報なし」とみなさず、追加解析が必要です。
+Results are written to `work/audit/`. Regular-expression matches are candidates requiring contextual and visual review, not confirmed findings. The tools extract attachments and images; do not publish their working logs without review when adapting them to other PDFs. The credentials parser supports the CBOR structures encountered in these two samples and is not a general C2PA validator. A failure on an unknown format means further analysis is needed, not that no information exists.

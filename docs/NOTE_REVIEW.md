@@ -1,75 +1,77 @@
-# note記事案の検討と差し替え文
+# Review of the accompanying note article
 
-新たに指定された3点で、記事の3種類の作品が揃っています。以下は実物の検査に合わせた修正案です。
+English | [日本語](NOTE_REVIEW.ja.md)
 
-## 1. 冒頭の誤記と公開先
+The three supplied files cover all three demonstrations in the proposed Japanese note article. The suggestions below reflect inspection of those files. This document translates the editorial guidance; the Japanese version contains replacement wording for the original article.
 
-「技術的な詳細なgithubに公開しました」は、次のように直します。
+## 1. Introduction and publication link
 
-> 技術的な仕組みと再構築用コードは[GitHub](https://github.com/hanglingmu0-web/haunted-pdf)に公開しました。興味のある方は、検証結果とあわせてご覧ください。
+Correct the introduction's grammatical error and use the following meaning:
 
-## 2. ビューアーの説明
+> The technical explanation and reconstruction code are available on [GitHub](https://github.com/hanglingmu0-web/haunted-pdf), together with the validation results.
 
-「Adobe Acrobat ReaderやChromeなど、PDF内のJavaScriptに対応したビューアー」は、対応を一律に保証する印象を避けるため次へ差し替えます。
+## 2. Viewer compatibility
 
-> アニメーション版は、デスクトップ版Adobe Acrobat ReaderのJavaScript環境を想定しています。ブラウザー内蔵のPDFビューアーを含め、機能の対応や設定によっては動きません。実機で確認した環境と未検証の環境は、GitHubの検証結果に分けて記載します。
+The wording that lists Acrobat Reader and Chrome as JavaScript-capable viewers could imply uniform compatibility. Replace it with:
 
-現段階の確認結果は構造解析・模擬JavaScript実行・PDFiumレンダリングです。AcrobatやChromeで実際に再生したという表記はまだ加えません。
+> The animations target desktop Adobe Acrobat Reader's JavaScript environment. They may not work in some viewers, including browser-based viewers, depending on feature support and settings. Tested and untested environments are listed separately in the GitHub validation report.
 
-## 3. フレームの格納方法を具体化
+The completed checks cover structural analysis, mocked JavaScript execution, and PDFium rendering. Do not claim actual Acrobat or Chrome playback has been tested.
 
-> 今回は、初期画像1枚をページ本体に置き、41枚の画像をAcroFormのボタンの見た目として重ねています。JavaScriptがボタンの表示・非表示を切り替えます。1ページに画像オブジェクトは42個あり、一部の画像は同じ内容です。
+## 3. Explain frame storage precisely
 
-「AcroFormのフィールドに格納」は概略として通じますが、実際にはWidgetのAppearance内のImage XObjectです。技術解説に接続するなら上の説明が正確です。
+> One initial image is painted into the page. Forty-one images are overlaid as AcroForm button appearances. JavaScript switches the buttons between visible and hidden states. The single page contains 42 image objects, some with identical content.
 
-初期の静止時間があるため、PDFリンクの近くに「人形は16秒ほど待つと変化が始まり、一巡は約96秒」と添えると、動かないと誤解されにくくなります。実際の時間は環境依存です。
+“Stored in AcroForm fields” is a useful overview, but the images are specifically Image XObjects within Widget appearances.
 
-## 4. レイヤーの説明とStampを整理
+The initial pause may make readers think the animation has failed. Near the doll PDF link, mention that the first changed image appears after about 16 seconds and a full cycle takes about 96 seconds. Actual timing depends on the viewer.
 
-第4節でレイヤー機能を説明した直後に、今回の方式が異なることを明示します。
+## 4. Distinguish layers from Stamp annotations
 
-> PDFには、画面表示と印刷で内容を変えるための仕組みがいくつかあります。レイヤーの表示・印刷設定もその一つですが、今回の人形ではレイヤーを使わず、印刷時にだけ現れるスタンプ注釈を使っています。
+Immediately after the article introduces layer-based display and print settings, clarify:
 
-第5節では「通常のOCGを使用しない」という説明が重複しているため、1か所へまとめられます。
+> PDF provides several ways to vary screen and print output. Layer settings are one option, but this doll uses a Stamp annotation that appears only when printing, rather than PDF layers.
 
-> 短髪の画像Aをページ本体に置き、その上に長髪の画像Bをスタンプ注釈として重ねます。注釈のPrintとNoViewを指定すると、対応するビューアーでは画面にA、注釈を含む印刷ではBが見えます。BはAを上から覆っています。
+Consolidate the repeated explanation that the implementation does not use OCGs:
 
-## 5. 「分からない」を限定する
+> The short-haired image A is painted into the page, and the long-haired image B is overlaid as a Stamp annotation. With Print and NoView set, a supporting viewer shows A on screen and B when annotations are included in printing. B covers A from above.
 
-「普通に開いて眺めるだけでは分かりません」は次の表現が正確です。
+## 5. Qualify claims that hidden content cannot be noticed
 
-> ページの見た目だけでは、もう一枚の画像に気付かない場合があります。ただし、注釈一覧や解析ツールなどから画像の存在を確認できるため、情報を秘密にする仕組みではありません。
+Replace categorical wording with:
 
-## 6. セキュリティ部分の軸
+> Someone looking only at the page may not notice the additional image. Annotation lists and inspection tools can reveal it, so this is not a secrecy mechanism.
 
-第6〜7節の留保は妥当です。ただし、「ダミーの画像で本来のデータを隠す」を情報保護の推奨策として受け取られないよう、見出しを「画面に出ない情報もPDFの中に残る」へ変えることを勧めます。
+## 6. Frame the security discussion around inspection
 
-> この仕組みは、画面だけを見てもPDF全体を検査したことにはならない、という例にもなります。印刷専用の注記を用意する用途はありますが、機密情報を隠して配布するためには使えません。表示されない画像も内部には残り、取り出せるからです。
+The original caveats about encryption and access control are appropriate. To avoid recommending concealment as protection, change the heading about hiding real data behind a dummy image to “Information that is not displayed can still remain inside a PDF.”
 
-「額縁の裏」の比喩を残す場合も、文書設計や検査の話としてつなげると、記事末尾の主張と揃います。今回は実際に、画面では見えない来歴情報や未使用スクリプトも確認できました。
+> This is an example of why looking at the screen is not a complete inspection of a PDF. Print-only notices can be useful, but this mechanism should not be used to conceal confidential data for distribution. The undisplayed images remain in the file and can be extracted.
 
-## 7. 過去の攻撃に関する記述
+If the analogy of hiding something behind a picture frame is retained, connect it to document design and inspection. In these samples, provenance data and an unused script were also present without being part of the visible page.
 
-「ゼロデイ攻撃やマルウェア配布の温床」という歴史的評価を残すなら、その主張を裏付ける具体的な一次資料を追加する必要があります。本一式ではその歴史的主張を検証していないため、記事には次の簡潔な説明を提案します。
+## 7. Historical claims about attacks
 
-> PDF内のJavaScriptは、ビューアーや組織の設定によって制限されている場合があります。この記事のPDFも、すべての環境で動作するわけではありません。
+The claim that PDF JavaScript has been a breeding ground for zero-day attacks or malware requires specific primary-source support if retained. That historical claim was not verified in this project. A concise alternative is:
 
-## 8. AIへの指示に加えること
+> PDF JavaScript may be restricted by viewer or organizational settings. These examples will not work in every environment.
 
-元のチェックリストに以下を加えると、今回見つかった問題を拾えます。
+## 8. Improve instructions to an AI agent
 
-> 有効なJavaScriptは、文字列検索だけでなく、NamesとOpenActionの参照先から特定してください。AcroFormのFieldsとページのWidgetが同じオブジェクトを参照することも確認してください。原本・再構築版・画像素材を区別し、個人情報とContent Credentials等の来歴情報も検査してください。実際のビューアーで確認していない内容は未検証と明記してください。
+Add the following to the article's existing verification checklist:
 
-## 掲載素材の対応
+> Identify active JavaScript by following Names and OpenAction references, not just searching text. Confirm that AcroForm Fields and page Widgets reference the same objects. Distinguish originals, reconstructed PDFs, and image assets. Inspect personal information and provenance data such as Content Credentials. Explicitly mark anything not tested in an actual viewer as untested.
 
-| 記事内の場所 | 本リポジトリの素材 |
+## Article asset mapping
+
+| Article illustration or link | Repository asset |
 | --- | --- |
-| 動く日本人形の初期画像 | `previews/ningyo-animation-start.png` |
-| 動く日本人形のPDF | `samples/ningyo_halloween_pumpkin.pdf` |
-| 扉が閉じたポスター | `previews/snow-start.jpg` |
-| 動くポスターのPDF | `samples/Snow_Night_Visitor.pdf` |
-| 印刷版の画面表示 | `previews/ningyo-print-screen.png` |
-| 印刷結果の説明画像 | `previews/ningyo-print-output.png` |
-| 印刷で変化するPDF | `samples/Ningyo_Halloween_Poster.pdf` |
+| Initial animated-doll image | `previews/ningyo-animation-start.png` |
+| Animated-doll PDF | `samples/ningyo_halloween_pumpkin.pdf` |
+| Movie poster with closed door | `previews/snow-start.jpg` |
+| Animated movie-poster PDF | `samples/Snow_Night_Visitor.pdf` |
+| Print-time demo's screen image | `previews/ningyo-print-screen.png` |
+| Illustration of print output | `previews/ningyo-print-output.png` |
+| Print-time transformation PDF | `samples/Ningyo_Halloween_Poster.pdf` |
 
-印刷結果の説明画像は「PDFiumの印刷モードで生成した画像」と説明してください。実際の紙の写真ではありません。アニメーション版と印刷版ではカボチャの飾り等も異なるので、それぞれ対応する画像を使います。
+Label the print-output illustration as a PDFium print-mode render, not a photograph of a physical print. The animated and print-time dolls have different details, including their pumpkin decorations; use the matching assets for each example.

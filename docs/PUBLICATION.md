@@ -1,34 +1,37 @@
-# GitHub公開情報
+# Publication information
 
-公開先：[hanglingmu0-web/haunted-pdf](https://github.com/hanglingmu0-web/haunted-pdf)
+English | [日本語](PUBLICATION.ja.md)
 
-公開日：2026年10月21日（日本時間）。公開ブランチは`main`です。
+Repository: [hanglingmu0-web/haunted-pdf](https://github.com/hanglingmu0-web/haunted-pdf)
 
-## note記事に貼るリンク
+Published on October 21, 2026 (Japan Standard Time). The public branch is `main`. English is the default documentation language; Japanese versions are linked from each document.
 
-- [リポジトリ・技術解説の入口](https://github.com/hanglingmu0-web/haunted-pdf)
-- [映画ポスターのPDF](https://github.com/hanglingmu0-web/haunted-pdf/blob/main/samples/Snow_Night_Visitor.pdf)
-- [動く日本人形のPDF](https://github.com/hanglingmu0-web/haunted-pdf/blob/main/samples/ningyo_halloween_pumpkin.pdf)
-- [印刷で変化する日本人形のPDF](https://github.com/hanglingmu0-web/haunted-pdf/blob/main/samples/Ningyo_Halloween_Poster.pdf)
-- [検証結果](https://github.com/hanglingmu0-web/haunted-pdf/blob/main/docs/VALIDATION.md)
-- [個人情報検査](https://github.com/hanglingmu0-web/haunted-pdf/blob/main/docs/PRIVACY.md)
+## Links for the accompanying article
 
-PDFのページを開いたら、ダウンロードして対応ビューアーで開いてください。GitHubのプレビュー上での再生を案内するものではありません。
+- [Repository and documentation](https://github.com/hanglingmu0-web/haunted-pdf)
+- [Movie-poster PDF](https://github.com/hanglingmu0-web/haunted-pdf/blob/main/samples/Snow_Night_Visitor.pdf)
+- [Animated-doll PDF](https://github.com/hanglingmu0-web/haunted-pdf/blob/main/samples/ningyo_halloween_pumpkin.pdf)
+- [Print-time transformation PDF](https://github.com/hanglingmu0-web/haunted-pdf/blob/main/samples/Ningyo_Halloween_Poster.pdf)
+- [Validation results](VALIDATION.md)
+- [Privacy inspection](PRIVACY.md)
+- [Japanese documentation](../README.ja.md)
 
-## 公開内容
+Open the PDF's page, download the file, and use a supporting viewer. These links do not imply that the animation plays in GitHub's preview.
 
-作者提供の原本PDF3点、プレビュー画像、再構築・検査コード、検証結果、技術解説、note記事の修正案を公開しています。原本PDFの合計は46,265,955バイトで、SHA-256は`SHA256SUMS.txt`に記録しています。
+## Published content
 
-作業ログ、ローカルの絶対パス、仮想環境、抽出した中間画像は収録していません。コミットにはGitHubのnoreplyアドレスを使用しています。
+The repository contains the three supplied original PDFs, preview images, reconstruction and inspection code, validation results, technical documentation, and a review of the proposed note article. The original PDFs total 46,265,955 bytes. Their SHA-256 hashes are recorded in `SHA256SUMS.txt`.
 
-## 原本の確認
+Working logs, workstation paths, virtual environments, and extracted intermediate images are excluded. Commits use a GitHub noreply email address.
+
+## Verify the originals
 
 ```sh
 python src/verify_hashes.py
 ```
 
-再構築方法は[README](../README.md)、ビューアーでの手動確認方法は[検証結果](VALIDATION.md)を参照してください。GitHub Actionsの自動検証は画像一致・構造・模擬タイマーを対象とし、AcrobatやChromeの実機試験ではありません。
+See the [README](../README.md) for reconstruction commands and [validation report](VALIDATION.md) for manual viewer checks. GitHub Actions checks image equality, structure, and mocked timers; it does not test Acrobat or Chrome applications.
 
-## 現在の利用条件と検証範囲
+## Usage terms and validation scope
 
-ライセンスは未指定です。架空の映画ポスターは公式作品・公式告知ではありません。PDF内の個人情報検査と、制作素材の権利関係の確認は別の作業です。実ビューアーでの確認結果は、実施後に環境・バージョンとともに追記します。
+No license has been specified. The fictional movie poster is not an official production or announcement. Checking PDFs for personal information is separate from checking rights to source artwork. Actual viewer results should be added with environment and version information after testing.
